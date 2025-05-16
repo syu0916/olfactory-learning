@@ -1,0 +1,60 @@
+import tensorflow as tf
+import keras_tuner as kt
+import hyperparameters as hyper
+from keras import Sequential, Model
+from keras.layers import Dense, Dropout, BatchNormalization, Input, Concatenate, Layer
+from preprocess import get_data
+import numpy as np
+
+
+class GenomeMLP(kt.HyperModel):
+
+    def build(self, hp):
+        # Define two inputs
+        input1 = Input(shape=(hyper.num_features,), name="input1")  # Replace input1_dim with actual dimension
+
+        x = input1
+
+        u = hp.Int(f"units-1", min_value = 1024, max_value = 2048, step = 1024)
+        x = Dense(units = u, activation = "relu") (x)
+
+        x = BatchNormalization()(x)
+
+        u = hp.Int(f"units-2", min_value = 512, max_value = 1024, step = 512)
+        x = Dense(units = u, activation = "relu") (x)
+
+        x = BatchNormalization()(x)
+
+        u = hp.Int(f"units-3", min_value = 512, max_value = 1024, step = 128)
+        x = Dense(units = u, activation = "relu")(x)
+
+        x = BatchNormalization()(x)
+
+        u = hp.Int(f"units-4", min_value = 128, max_value = 256, step = 128)
+        x = Dense(units = u, activation = "relu")(x)
+        
+
+
+        output = Dense(hyper.classes, activation="softmax")(x)
+
+
+        model = Model(inputs=input1, outputs=output)
+
+        model.compile(
+            optimizer="adam",
+            loss="sparse_categorical_crossentropy",
+            metrics=["accuracy"],
+        )
+
+        return model
+
+    def fit(self, hp, model, *args, **kwargs):
+        return model.fit(
+            *args,
+            # Tune whether to shuffle the data in each epoch.
+            epochs = hp.Int("epochs", 10, 50, step=50),
+            batch_size=hp.Int('batch_size', 32, 256, step=32),
+            shuffle=hp.Boolean("shuffle"),
+            **kwargs,
+        )
+    

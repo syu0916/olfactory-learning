@@ -1,0 +1,7 @@
+**/pickles/
+**/jupyter-log*
+**/slurm-*
+**/ct-models
+**/30min-model/
+**/90min-model/
+**/__pycache__/
