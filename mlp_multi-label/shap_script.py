@@ -12,6 +12,12 @@ import numpy as np
 import shap
 import pickle
 
+"""
+    deprecated/outdated. shap_script2 builds on this script, this was what 
+    i used when i wasn't doing trials and when i was saving the model in a different
+    configuration.
+"""
+
 def interpret():
     with open('explainer.pkl', 'rb') as f:
         explainer = pickle.load(f)

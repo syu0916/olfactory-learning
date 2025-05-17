@@ -6,6 +6,10 @@ from keras.layers import Dense, Dropout, BatchNormalization, Input, Concatenate,
 from preprocess import get_data
 import numpy as np
 
+"""
+    The file used to build our model. GenomeMLP inherits kt.HyperModel, which is 
+    used to hypertune in the main.py script. 
+"""
 
 class GenomeMLP(kt.HyperModel):
 

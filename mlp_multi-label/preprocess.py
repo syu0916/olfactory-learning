@@ -9,6 +9,9 @@ import pandas as pd
 import anndata
 import os
 
+"""
+    pretty self-explanatory. gets all of the data and preprocess it.
+"""
 
 def get_data(TIME_POINT):
     np.random.seed(hp.random_seed)

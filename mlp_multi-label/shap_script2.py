@@ -20,6 +20,16 @@ import seaborn as sns
 NUM_SHAP_FEATURES = 40
 np.random.seed(hp.random_seed)
 
+"""
+    This script generates shap values, indiscriminate of cell-type or condition, 
+    over the course of 50 trials. it's different from shap_script.py because of 
+    this multi-trial feature. After each trial is complete, its score in realtion 
+    to all the other genes that have been across all trials, based on its 
+    is calculated. The genes are then sorted in terms of their score to identify 
+    the most significant genes across all trials.
+
+"""
+
 def generate_values(time, condition_model, celltype_model, X_train, X_test, obs_test):
 
     X_train = X_train[0].X.toarray()
@@ -104,7 +114,7 @@ for t in ["30", "90"]:
         outputs=model.get_layer("cell-type-out").output
     )
 
-    for i in range(50):
+    for i in range(50): # denotes how many trials we want.
         print(f"trial {i}")
         sorted_features, sorted_shap_vals = generate_values(t, condition_model, celltype_model, X_train, X_test, obs_test)
         sorted_shap_vals = np.array(sorted_shap_vals)

@@ -7,6 +7,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import ListedColormap, Normalize
 
+
+"""
+    This script is used to generate a heat map of the average gene expression of 
+    the top 40 features, identified by shap, on a cell-type x condition basis. 
+    Also calculates the variance across such groups to identify which genes are 
+    most variable across cell-type x condition.
+"""
+
+
+
 def generate_variance(data, t):
     top_features = pd.read_csv("csvs/top_features.csv")
     print(top_features)

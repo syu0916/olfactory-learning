@@ -3,6 +3,11 @@ import hyperparameters as hp
 from keras.layers import Dropout, Dense, BatchNormalization, Model, Concatenate
 from keras import Sequential
 
+"""
+    NOTE: Deprecated, i use model_tune more.
+"""
+
+
 def train(model, train_data, test_data):
     weight_folder = "weights/best_weights.h5"
 
